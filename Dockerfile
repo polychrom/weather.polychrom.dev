@@ -11,4 +11,5 @@ WORKDIR /
 COPY . .
 
 EXPOSE 4000
-CMD [ "nodemon", "-L", "--delay", "15", "/dist/weather.polychrom.dev/server/main.js" ]
+#CMD [ "nodemon", "-L", "--delay", "15", "/dist/weather.polychrom.dev/server/main.js" ]
+CMD [ "node", "/dist/weather.polychrom.dev/server/main.js" ]
