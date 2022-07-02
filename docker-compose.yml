@@ -6,9 +6,11 @@ services:
     container_name: weather_polychrom_dev_ssr
     ports:
       - 4000:4000
+    environment:
+      - PORT=4000
     volumes:
-      - ./dist/weather.polychrom.dev/server:/ssr_server
-    command: node ssr_server/main.js
+      - ./dist/weather.polychrom.dev/server:/server
+    command: node server/main.js
 
   weather_polychrom_dev:
     image: nginx:latest
