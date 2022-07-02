@@ -2,6 +2,7 @@ version: "3"
 
 services:
   weather_polychrom_dev_ssr:
+    build: .
     image: node:16.3.0-alpine
     container_name: weather_polychrom_dev_ssr
     ports:
@@ -9,7 +10,8 @@ services:
     volumes:
       #copy complete /dist because express requests browser view
       - ./dist/weather.polychrom.dev:/dist/weather.polychrom.dev
-    command: node /dist/weather.polychrom.dev/server/main.js
+    #command: nodemon /dist/weather.polychrom.dev/server/main.js
+    command: bash -c "npm install -g nodemon && nodemon /dist/weather.polychrom.dev/server/main.js"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.weather_polychrom_dev.entrypoints=websecure"
