@@ -5,7 +5,7 @@ services:
     image: node:16.3.0-alpine
     container_name: weather_polychrom_dev_ssr
     ports:
-      - 8030
+      - 4000:4000
     volumes:
       - ./dist/weather.polychrom.dev/server:/ssr_server
     command: node ssr_server/main.js
