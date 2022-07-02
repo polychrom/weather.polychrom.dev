@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+  weather_polychrom_dev:
+    image: nginx:latest
+    container_name: weather_polychrom_dev
+    ports:
+      - 8016
+    volumes:
+      - ./dist:/usr/share/nginx/html
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.weather_polychrom_dev.entrypoints=websecure"
+      - "traefik.http.routers.weather_polychrom_dev.rule=Host(`weather.polychrom.dev`)"
+      - "traefik.http.routers.weather_polychrom_dev.tls.certresolver=myresolver"
+      - "traefik.port=8016"
+
+    networks:
+      - traefik_network
+networks:
+  traefik_network:
+    external: true
