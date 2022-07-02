@@ -1,5 +1,5 @@
 FROM node:16.0.0-slim
-RUN npm install -g nodemon
+RUN npm install nodemon
 
 # Create app directory
 WORKDIR /
