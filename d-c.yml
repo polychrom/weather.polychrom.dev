@@ -13,14 +13,14 @@ services:
       - ./dist/weather.polychrom.dev:/dist/weather.polychrom.dev
     command: node /dist/weather.polychrom.dev/server/main.js
 
-    #weather_polychrom_dev:
-    #image: nginx:latest
-    #container_name: weather_polychrom_dev
-    #ports:
-    #  - 8016
-    #volumes:
-    #  # - ./dist:/usr/share/nginx/html
-    #  - ./dist/weather.polychrom.dev/browser:/usr/share/nginx/html
+  weather_polychrom_dev:
+    image: nginx:latest
+    container_name: weather_polychrom_dev
+    ports:
+      - 8016
+    volumes:
+      # - ./dist:/usr/share/nginx/html
+      - ./dist/weather.polychrom.dev/browser:/usr/share/nginx/html
 
     labels:
       - "traefik.enable=true"
