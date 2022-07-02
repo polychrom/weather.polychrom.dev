@@ -7,7 +7,9 @@ services:
     ports:
       - 8016
     volumes:
-      - ./dist:/usr/share/nginx/html
+      # - ./dist:/usr/share/nginx/html
+      - ./dist/weather.polychrom.dev/browser:/usr/share/nginx/html
+
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.weather_polychrom_dev.entrypoints=websecure"
