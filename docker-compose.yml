@@ -1,6 +1,13 @@
 version: "3"
 
 services:
+  weather_polychrom_dev_ssr:
+    image: node:16.3.0-alpine
+    container_name: weather_polychrom_dev_ssr
+    volumes:
+      - ./dist/weather.polychrom.dev/server:/ssr_server
+    command: node ssr_server/main.js
+
   weather_polychrom_dev:
     image: nginx:latest
     container_name: weather_polychrom_dev
