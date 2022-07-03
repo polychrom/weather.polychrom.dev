@@ -30,12 +30,21 @@ export function app(): express.Express {
   // Example Express Rest API endpoints
   // server.get('/api/**', (req, res) => { });
   // Serve static files from /browser
-  server.get(
-    '*.*',
-    express.static(distFolder, {
-      maxAge: '1y',
-    })
-  );
+
+  var options = {
+    dotfiles: 'ignore',
+    etag: false,
+    extensions: ['htm', 'html'],
+    index: false,
+    maxAge: '1d',
+    redirect: false,
+  };
+
+  server.get('*.*', express.static(distFolder, options));
+
+  server.get('*.*', (req, res) => {
+    res.send('triggered');
+  });
 
   // All regular routes use the Universal engine
   server.get('*', (req, res) => {
@@ -54,7 +63,7 @@ function run(): void {
   // Start up the Node server
   const server = app();
   server.listen(port, () => {
-    console.log(`Node Express server listening on http://localhost:${port}`);
+    console.log(`Node Express server listening on PORT ${port}`);
   });
 }
 
