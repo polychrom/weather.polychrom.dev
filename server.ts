@@ -36,7 +36,7 @@ export function app(): express.Express {
     etag: false,
     extensions: ['htm', 'html'],
     index: false,
-    maxAge: '1d',
+    maxAge: '2d',
     redirect: false,
   };
 
