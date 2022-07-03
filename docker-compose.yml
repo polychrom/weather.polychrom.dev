@@ -17,6 +17,10 @@ services:
       - "traefik.http.routers.weather_polychrom_dev.tls.certresolver=myresolver"
       - "traefik.port=8016"
 
+      # Enable gzip compression
+      - "traefik.http.routers.weather_polychrom_dev.middlewares=test-compress"
+      - "traefik.http.middlewares.test-compress.compress=true"
+
     networks:
       - traefik_network
 networks:
