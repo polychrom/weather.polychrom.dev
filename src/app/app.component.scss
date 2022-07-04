@@ -1,0 +1,51 @@
+.weather_widget {
+  padding: 10px;
+  //margin: 20px;
+  border-right: 1px solid #fff;
+  text-align: center;
+  flex: 1;
+}
+
+.weather_widget:last-child {
+  border: none;
+}
+
+.weather_widget_wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.app_wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: space-between;
+}
+
+.header {
+  margin: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: 20px;
+}
+
+.current_weather_temperature {
+  font-size: 50px;
+  font-weight: 400;
+  text-align: center;
+}
+
+.current_weather_description {
+  font-size: 22px;
+  font-weight: 400;
+  text-align: center;
+}
+
+.widget_temperature {
+  font-weight: 700;
+}

@@ -10,18 +10,10 @@ export class ApiService {
   private key = '8d0f1082222a6a8aea340e03502dafc0';
   private weatherEndpoint: string =
     'https://api.openweathermap.org/data/2.5/forecast?lat=35&lon=139&appid=8d0f1082222a6a8aea340e03502dafc0';
-  data: Observable<any> | undefined;
+  //data: Observable<any> | undefined;
+  public getData$: any;
 
-  constructor(private http: HttpClient) {}
-  /*
-  getData(): Observable<any> {
-    //console.info('get', this.data);
-    if (this.data) {
-      return this.data;
-    } else {
-      this.data = this.http.get<any>(this.weatherEndpoint).pipe(shareReplay(1));
-      console.log(this.data);
-      return this.data;
-    }
-  }*/
+  constructor(private http: HttpClient) {
+    this.getData$ = this.http.get(this.weatherEndpoint).pipe(shareReplay(1));
+  }
 }
