@@ -1,0 +1,44 @@
+.background {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  background-size: cover;
+  position: fixed;
+}
+
+.open_navigation {
+  padding: 20px;
+  border: 1px solid #ff0000;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.close_navigation {
+  padding: 20px;
+  border: 1px solid #ff0000;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 999;
+}
+
+#navigation {
+  font-size: 18px;
+  color: #000;
+
+  position: fixed;
+  background-color: #fff;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 70vw;
+}
+
+.navigation_wrapper {
+  z-index: 99;
+}
+
+.stored_locations {
+  color: #000;
+}

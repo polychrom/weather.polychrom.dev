@@ -2,6 +2,7 @@ import { ViewportScroller } from '@angular/common';
 import { isNgTemplate } from '@angular/compiler';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { ApiService } from './api.service';
 
 @Component({
@@ -22,15 +23,24 @@ export class AppComponent {
   public forecast: any;
   public dayArray: any = [];
   public currentWeather: any;
+  private coord = '';
+  public locationList: any;
+
+  private subscription?: Subscription;
 
   constructor(
     private router: Router,
-    private apiService: ApiService,
+    public apiService: ApiService,
     private viewportScroller: ViewportScroller
   ) {}
 
   ngOnInit(): void {
-    this.apiService.getData$.subscribe((data: any) => {
+    this.apiService.$searchLocationSuggestList.subscribe((value: any) => {
+      console.log('data', value);
+      this.locationList = value;
+    });
+
+    this.apiService.$weather.subscribe((data: any) => {
       this.meta = data;
       this.forecast = data.list;
       this.currentWeather = data.list[0];
@@ -54,5 +64,22 @@ export class AppComponent {
 
       //this.days = data.list.map((item: any) => item.dt);
     });
+  }
+
+  searchLocation(): void {
+    const searchValue = (<HTMLInputElement>document.getElementById('search'))
+      .value;
+    console.log('input', searchValue);
+    this.apiService.searchRequest(searchValue);
+  }
+
+  searchWeather(idx: number): void {
+    const weatherLocation = this.locationList[idx];
+
+    this.apiService.searchWeatherByLocation(
+      weatherLocation.lat,
+      weatherLocation.lon
+    );
+    console.log('pos', idx);
   }
 }

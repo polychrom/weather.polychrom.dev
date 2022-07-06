@@ -1,0 +1,24 @@
+<div class="open_navigation" (click)=openNavigation()>
+    <div class="options"><img src="../assets/icons/ellipsis-vertical-solid.svg" height="20"></div>
+</div>
+
+<ng-container *ngIf="isNavigationActive">
+    <div class="navigation_wrapper">
+
+        <div class="close_navigation" (click)=closeNavigation()>
+            <div class="options"><img src="../assets/icons/xmark-solid.svg" height="20"></div>
+        </div>
+
+        <div class="background">
+
+            <div id="navigation">
+
+                <li class="stored_locations" *ngFor="let location of this.locations; let i = index">
+                    {{ location.city }}
+                </li>
+
+            </div>
+
+        </div>
+    </div>
+</ng-container>

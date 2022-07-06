@@ -49,3 +49,22 @@
 .widget_temperature {
   font-weight: 700;
 }
+
+.location_suggest_item {
+  padding: 10px 20px;
+  background-color: #fff;
+  color: #000;
+  border-bottom: #ccc 1px solid;
+}
+
+.location_suggest_item:last-child {
+  border: none;
+}
+
+.location_name {
+  font-weight: 700;
+}
+
+.location_country {
+  font-size: 10px;
+}

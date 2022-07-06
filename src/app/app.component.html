@@ -1,7 +1,20 @@
+<app-navigation></app-navigation>
+
+<input type="search" id="search">
+<input type="submit" value="Submit" (click)="this.searchLocation()">
+
+<ng-container *ngIf="this.locationList">
+  <li *ngFor="let location of this.locationList; let i = index" (click)="searchWeather(i)"
+    class="location_suggest_item">
+    <span class="location_name"> {{ location.name }} </span>
+    <span class="location_country"> {{ location.country }} {{ location.state }} </span>
+  </li>
+</ng-container>
+
+
 <div *ngIf="this.meta" class="app_wrapper">
   <div class="header">
     <div class="title">{{ this.meta.city.name }}</div>
-    <div class="options"><img src="../assets/icons/ellipsis-vertical-solid.svg" height="20"></div>
   </div>
 
   <div>
