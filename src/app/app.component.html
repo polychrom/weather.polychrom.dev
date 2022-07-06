@@ -1,7 +1,7 @@
 <app-navigation></app-navigation>
 
-<input type="search" id="search">
-<input type="submit" value="Submit" (click)="this.searchLocation()">
+<input type="search" id="search" placeholder="Search Location">
+<input type="submit" id="submit" value="Submit" (click)="this.searchLocation()">
 
 <ng-container *ngIf="this.locationList">
   <li *ngFor="let location of this.locationList; let i = index" (click)="searchWeather(i)"

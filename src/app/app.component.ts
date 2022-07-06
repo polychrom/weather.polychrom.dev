@@ -69,6 +69,7 @@ export class AppComponent {
   searchLocation(): void {
     const searchValue = (<HTMLInputElement>document.getElementById('search'))
       .value;
+
     console.log('input', searchValue);
     this.apiService.searchRequest(searchValue);
   }

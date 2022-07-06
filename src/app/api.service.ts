@@ -51,9 +51,9 @@ export class ApiService {
       lon: res.city.coord.lon,
     };
 
-    //const locationToString = JSON.stringify(location);
-
     this.locationList.push(location);
+
+    // structure [{},{},{}]
     localStorage.setItem('location', JSON.stringify(this.locationList));
 
     console.log('save', res);
