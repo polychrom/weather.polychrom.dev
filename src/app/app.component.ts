@@ -2,8 +2,9 @@ import { ViewportScroller } from '@angular/common';
 import { isNgTemplate } from '@angular/compiler';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { fromEvent, Subscription } from 'rxjs';
 import { ApiService } from './api.service';
+import { HelperService } from './helper.service';
 
 @Component({
   selector: 'app-root',
@@ -25,16 +26,37 @@ export class AppComponent {
   public currentWeather: any;
   private coord = '';
   public locationList: any;
+  private keyEnter = 13; // Enter
+  public searchNote = '';
 
   private subscription?: Subscription;
+
+  public search = this.helperService.isBrowser()
+    ? <HTMLInputElement>document.getElementById('search')
+    : undefined;
 
   constructor(
     private router: Router,
     public apiService: ApiService,
-    private viewportScroller: ViewportScroller
+    private viewportScroller: ViewportScroller,
+    public helperService: HelperService
   ) {}
 
   ngOnInit(): void {
+    fromEvent(window, 'keydown').subscribe((event: any) => {
+      const search = <HTMLInputElement>document.getElementById('search');
+      console.log('chars', search.value);
+
+      if (event.keyCode === this.keyEnter && event.target.id === 'search') {
+        if (search && search.value.length > 1) {
+          this.searchLocation();
+        } else {
+          console.log('not enough chars');
+          this.searchNote = 'not enough chars';
+        }
+      }
+    });
+
     this.apiService.$searchLocationSuggestList.subscribe((value: any) => {
       console.log('data', value);
       this.locationList = value;
@@ -67,11 +89,10 @@ export class AppComponent {
   }
 
   searchLocation(): void {
-    const searchValue = (<HTMLInputElement>document.getElementById('search'))
-      .value;
+    //console.log('input', this.searchValue);
+    const search = <HTMLInputElement>document.getElementById('search');
 
-    console.log('input', searchValue);
-    this.apiService.searchRequest(searchValue);
+    this.apiService.searchRequest(search ? search.value : '');
   }
 
   searchWeather(idx: number): void {

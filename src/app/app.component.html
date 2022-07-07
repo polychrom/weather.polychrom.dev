@@ -1,15 +1,32 @@
 <app-navigation></app-navigation>
 
-<input type="search" id="search" placeholder="Search Location">
-<input type="submit" id="submit" value="Submit" (click)="this.searchLocation()">
 
-<ng-container *ngIf="this.locationList">
-  <li *ngFor="let location of this.locationList; let i = index" (click)="searchWeather(i)"
-    class="location_suggest_item">
-    <span class="location_name"> {{ location.name }} </span>
-    <span class="location_country"> {{ location.country }} {{ location.state }} </span>
-  </li>
-</ng-container>
+<div *ngIf="true" class="search_wrapper">
+
+  <div>
+    <div class="search_input">
+      <!--
+      <div style="display: block;">{{ this.searchNote }}</div>
+      -->
+
+      <input type="search" id="search" placeholder="Search Location">
+      <input type="submit" id="submit" value="" (click)="this.searchLocation()">
+    </div>
+
+
+    <ng-container *ngIf="this.locationList">
+      <li *ngFor="let location of this.locationList; let i = index" (click)="searchWeather(i)"
+        class="location_suggest_item">
+        <span class="location_name"> {{ location.name }} </span>
+        <span class="location_country"> {{ location.country }} {{ location.state }} </span>
+      </li>
+    </ng-container>
+  </div>
+
+</div>
+
+
+
 
 
 <div *ngIf="this.meta" class="app_wrapper">
