@@ -3,6 +3,7 @@ import { fromEvent } from 'rxjs';
 import { ApiService } from '../api.service';
 import { PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { HelperService } from '../helper.service';
 
 @Component({
   selector: 'app-navigation',
@@ -10,23 +11,19 @@ import { isPlatformBrowser } from '@angular/common';
   styleUrls: ['./navigation.component.scss'],
 })
 export class NavigationComponent implements OnInit {
-  private isBrowser: boolean;
-
   public locations: any;
   public isNavigationActive = false;
   constructor(
-    @Inject(PLATFORM_ID) platformId: Object,
-    public apiService: ApiService
+    public apiService: ApiService,
+    public helperService: HelperService
   ) {
-    this.isBrowser = isPlatformBrowser(platformId);
+    console.log('platform browser?', this.helperService.isBrowser());
 
-    console.log('platform', this.isBrowser);
-
-    if (this.isBrowser) {
+    if (this.helperService.isBrowser()) {
       this.locations = this.apiService.readLocationFromStorage();
     }
 
-    if (this.isBrowser) {
+    if (this.helperService.isBrowser()) {
       const click$ = fromEvent(window, 'click');
       click$.subscribe((event: any) => {
         let toggle = false;
@@ -40,7 +37,11 @@ export class NavigationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('nav read loc', this.locations);
+    if (this.helperService.isBrowser()) {
+      console.log('nav read loc', this.locations);
+    } else {
+      console.log('server, cannot read loc');
+    }
   }
 
   openNavigation(): void {
