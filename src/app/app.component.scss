@@ -52,7 +52,7 @@
 
 .location_suggest_item {
   cursor: pointer;
-  padding: 10px 20px;
+  padding: 10px 20px 10px 12px;
   background-color: #fff;
   color: #000;
   border-bottom: #ccc 1px solid;
@@ -96,7 +96,7 @@ input#submit {
   border-radius: 4px;
   background-image: url(../assets/icons/search.svg);
   background-repeat: no-repeat;
-  background-size: 50%;
+  background-size: 40%;
   background-position: center center;
 }
 
@@ -109,10 +109,12 @@ input:focus::placeholder {
   top: 0;
   bottom: 0;
   position: absolute;
-  border: 1px solid #ff00ff;
   display: flex;
   width: 100vw;
   height: 100vh;
   justify-content: space-around;
   align-items: center;
+
+  //backdrop-filter: blur(10px);
+  background-color: rgba(0, 0, 0, 0.5);
 }
