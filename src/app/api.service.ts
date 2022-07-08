@@ -39,7 +39,7 @@ export class ApiService {
   searchRequest(city: string) {
     this.http
       .get(
-        `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=8d0f1082222a6a8aea340e03502dafc0`
+        `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=8d0f1082222a6a8aea340e03502dafc0`
       )
       .subscribe((res: any) => this.$searchLocationSuggestList.next(res));
   }
