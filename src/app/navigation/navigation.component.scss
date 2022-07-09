@@ -6,12 +6,23 @@
   position: fixed;
 }
 
-.open_navigation {
-  cursor: pointer;
-  padding: 20px;
+.top_navigation {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
   position: absolute;
   top: 0;
   right: 0;
+}
+
+.top_navigation div {
+  padding: 30px;
+  cursor: pointer;
+}
+
+.open_navigation {
+  // cursor: pointer;
+  //padding: 20px;
 }
 
 .close_navigation {
@@ -41,4 +52,13 @@
 
 .stored_locations {
   color: #000;
+}
+
+.options_temperature {
+  display: flex;
+  align-items: center;
+  flex: 1 1 0;
+}
+
+.options_temperature li {
 }

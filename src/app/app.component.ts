@@ -1,10 +1,8 @@
-import { ViewportScroller } from '@angular/common';
-import { isNgTemplate } from '@angular/compiler';
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { fromEvent, Subscription } from 'rxjs';
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { fromEvent } from 'rxjs';
 import { ApiService } from './api.service';
 import { HelperService } from './helper.service';
+import { SharedService } from './shared.service';
 
 @Component({
   selector: 'app-root',
@@ -24,42 +22,64 @@ export class AppComponent {
   public forecast: any;
   public dayArray: any = [];
   public currentWeather: any;
-  private coord = '';
   public locationList: any;
   private keyEnter = 13; // Enter
   public searchNote = '';
-
-  private subscription?: Subscription;
+  public isSearchModalOpen = false;
+  public alertTooFewChars = 'not enough chars';
+  private currentLocationId: any;
 
   public search = this.helperService.isBrowser()
     ? <HTMLInputElement>document.getElementById('search')
     : undefined;
 
   constructor(
-    private router: Router,
     public apiService: ApiService,
-    private viewportScroller: ViewportScroller,
-    public helperService: HelperService
-  ) {}
+    public helperService: HelperService,
+    public sharedService: SharedService,
+    private cdr: ChangeDetectorRef
+  ) {
+    if (this.helperService.isBrowser()) {
+      this.apiService.initLatestWeatherFromStorage();
+
+      if (this.apiService.readLocationFromStorage()) {
+        this.sharedService.searchModalState(false);
+      } else {
+        this.sharedService.searchModalState(true);
+      }
+    }
+  }
 
   ngOnInit(): void {
-    fromEvent(window, 'keydown').subscribe((event: any) => {
-      const search = <HTMLInputElement>document.getElementById('search');
-      console.log('chars', search.value);
-
-      if (event.keyCode === this.keyEnter && event.target.id === 'search') {
-        if (search && search.value.length > 1) {
-          this.searchLocation();
-        } else {
-          console.log('not enough chars');
-          this.searchNote = 'not enough chars';
-        }
-      }
+    this.apiService.$unitTemperature.subscribe(() => {
+      console.log('cdr triggered');
+      this.cdr.detectChanges();
     });
 
-    this.apiService.$searchLocationSuggestList.subscribe((value: any) => {
-      console.log('data', value);
-      this.locationList = value;
+    this.sharedService.$isSearchModalOpen.subscribe((res) => {
+      console.log('app search modal', res);
+      this.isSearchModalOpen = res;
+    });
+
+    if (this.helperService.isBrowser()) {
+      fromEvent(window, 'keydown').subscribe((event: any) => {
+        const search = <HTMLInputElement>document.getElementById('search');
+        console.log('chars', search.value);
+
+        if (event.keyCode === this.keyEnter && event.target.id === 'search') {
+          if (search && search.value.length > 1) {
+            this.searchLocation();
+          } else {
+            console.log('not enough chars');
+            this.searchNote = this.alertTooFewChars;
+          }
+        }
+      });
+    }
+
+    this.apiService.$searchLocationSuggestList.subscribe((res: any) => {
+      console.log('data', res);
+      this.locationList = res;
     });
 
     this.apiService.$weather.subscribe((data: any) => {
@@ -89,13 +109,19 @@ export class AppComponent {
   }
 
   searchLocation(): void {
+    console.log('YYY search');
     //console.log('input', this.searchValue);
     const search = <HTMLInputElement>document.getElementById('search');
-
-    this.apiService.searchRequest(search ? search.value : '');
+    if (search && search.value.length > 1) {
+      this.apiService.searchRequest(search ? search.value : '');
+    } else {
+      this.searchNote = this.alertTooFewChars;
+    }
   }
 
   searchWeather(idx: number): void {
+    this.currentLocationId = idx;
+    console.log('IDX', idx);
     const weatherLocation = this.locationList[idx];
 
     this.apiService.searchWeatherByLocation(

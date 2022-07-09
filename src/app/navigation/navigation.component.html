@@ -1,5 +1,11 @@
-<div class="open_navigation" (click)=openNavigation()>
-    <div class="options"><img src="../assets/icons/ellipsis-vertical-solid.svg" height="20"></div>
+<div class="top_navigation">
+    <div class="" (click)="openSearchModal()">
+        <img src="../assets/icons/search.svg" height="20">
+    </div>
+
+    <div class="options open_navigation" (click)=openNavigation()>
+        <img src="../assets/icons/ellipsis-vertical-solid.svg" height="20">
+    </div>
 </div>
 
 <ng-container *ngIf="isNavigationActive">
@@ -12,6 +18,12 @@
         <div class="background">
 
             <div id="navigation">
+                DEBUG OPTIONS
+                <div class="options_temperature">
+                    <li>Kelvin K</li>
+                    <li>Grad Celsius °C</li>
+                    <li>Fahrenheit F</li>
+                </div>
 
                 <!--
                 <li class="stored_locations" *ngFor="let location of this.locations; let i = index">

@@ -6,16 +6,17 @@ import { isPlatformBrowser, isPlatformServer } from '@angular/common';
   providedIn: 'root',
 })
 export class HelperService {
-  //private isBrowser: boolean;
-  //private isServer: boolean;
+  platformId: Object;
 
-  constructor(@Inject(PLATFORM_ID) platformId: Object) {}
+  constructor(@Inject(PLATFORM_ID) platformId: Object) {
+    this.platformId = platformId;
+  }
 
   isBrowser(): boolean {
-    return isPlatformBrowser(PLATFORM_ID);
+    return isPlatformBrowser(this.platformId);
   }
 
   isServer(): boolean {
-    return isPlatformServer(PLATFORM_ID);
+    return isPlatformServer(this.platformId);
   }
 }

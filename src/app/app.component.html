@@ -1,18 +1,30 @@
 <app-navigation></app-navigation>
 
 
-<div *ngIf="true" class="search_wrapper">
-
-  <div>
-    <div class="search_input">
-      <!--
-      <div style="display: block;">{{ this.searchNote }}</div>
-      -->
-
-      <input type="search" id="search" placeholder="Search Location">
-      <input type="submit" id="submit" value="" (click)="this.searchLocation()">
+<div *ngIf="this.isSearchModalOpen" id="search_modal">
+  <div class="search_wrapper">
+    <div class="search_modal_close" (click)="this.sharedService.searchModalState(false)">
+      <img src="../assets/icons/xmark-solid-white.svg" height="20">
     </div>
 
+
+    <div class="search_input">
+
+
+      <div>{{ this.searchNote }}</div>
+
+      <div>
+        <div class="temperature_units">
+          <li (click)="this.apiService.setTemperatureUnit('standard')">Kelvin</li>
+          <li (click)="this.apiService.setTemperatureUnit('metric')">Grad Celsius</li>
+          <li (click)="this.apiService.setTemperatureUnit('imperial')">Fahrenheit</li>
+        </div>
+        <div class="search_fields">
+          <input type="search" id="search" placeholder="Search Location">
+          <input type="submit" id="submit" value="" (click)="this.searchLocation()">
+        </div>
+      </div>
+    </div>
 
     <ng-container *ngIf="this.locationList">
       <li *ngFor="let location of this.locationList; let i = index" (click)="searchWeather(i)"
@@ -44,7 +56,7 @@
     <ng-container *ngFor="let element of this.forecast; let i = index">
       <div class="weather_widget" *ngIf="i < 8">
         <div>{{ element.dt * 1000 | date :'HH:mm' }}</div>
-        <div class="widget_temperature">{{ element.main.temp_max | number:'1.0-0' }} K</div>
+        <div class="widget_temperature">{{ element.main.temp_max | number:'1.0-0' }} {{ 'K' | tempUnit }}</div>
       </div>
     </ng-container>
   </div>

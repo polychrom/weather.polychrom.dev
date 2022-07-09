@@ -1,9 +1,8 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { fromEvent } from 'rxjs';
 import { ApiService } from '../api.service';
-import { PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
 import { HelperService } from '../helper.service';
+import { SharedService } from '../shared.service';
 
 @Component({
   selector: 'app-navigation',
@@ -15,7 +14,8 @@ export class NavigationComponent implements OnInit {
   public isNavigationActive = false;
   constructor(
     public apiService: ApiService,
-    public helperService: HelperService
+    public helperService: HelperService,
+    public sharedService: SharedService
   ) {
     console.log('platform browser?', this.helperService.isBrowser());
 
@@ -50,5 +50,9 @@ export class NavigationComponent implements OnInit {
 
   closeNavigation(): void {
     this.isNavigationActive = false;
+  }
+
+  openSearchModal(): void {
+    this.sharedService.searchModalState(true);
   }
 }
