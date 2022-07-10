@@ -1,7 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { catchError, retry, share, shareReplay } from 'rxjs/operators';
+
+interface ICity {
+  name: string;
+  lat: number;
+  lon: number;
+  unit: string;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +32,7 @@ export class ApiService {
 
   //private requestCity = `http://api.openweathermap.org/geo/1.0/direct?q=${this.city}&limit=5&appid=8d0f1082222a6a8aea340e03502dafc0`;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     this.getData$ = this.http.get(this.weatherEndpoint).pipe(shareReplay(1));
   }
 
@@ -60,6 +68,16 @@ export class ApiService {
         this.$weather.next(res);
         console.log('weather', res);
         this.saveLocationToStorage(res);
+
+        /*
+        this.router.navigate(['/city'], {
+          queryParams: <ICity>{
+            name: res.city.name,
+            lat: res.city.coord.lat,
+            lon: res.city.coord.lon,
+            unit: 'standard',
+          },
+        });*/
       });
   }
 

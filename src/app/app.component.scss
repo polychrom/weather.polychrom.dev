@@ -34,10 +34,36 @@
   font-size: 20px;
 }
 
+.current_weather_wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .current_weather_temperature {
   font-size: 50px;
   font-weight: 400;
   text-align: center;
+}
+
+.sunrise,
+.sunset {
+  display: flex;
+  align-items: center;
+
+  span {
+    margin: 0 10px;
+  }
+}
+
+.sunrise_sunset {
+  margin-top: 30px;
+  font-size: 20px;
+  font-weight: 400;
+  text-align: center;
+  display: flex;
+  // align-items: center;
+  justify-content: space-between;
+  width: 220px;
 }
 
 .current_weather_description {

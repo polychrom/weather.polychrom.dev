@@ -46,9 +46,22 @@
     <div class="title">{{ this.meta.city.name }}</div>
   </div>
 
-  <div>
+  <div class="current_weather_wrapper">
     <div class="current_weather_temperature">{{ this.currentWeather.main.temp | number:'1.0-0' }} K</div>
     <div class="current_weather_description">{{ this.currentWeather.weather[0].description }}</div>
+
+    <div class="sunrise_sunset">
+      <div class="sunrise">
+        <img src="../assets/icons/arrow-up-solid.svg" height="20">
+        <span> {{ this.meta.city.sunrise * 1000 | date :'HH:mm' }} </span>
+      </div>
+
+      <div class="sunset">
+        <img src="../assets/icons/arrow-down-solid.svg" height="20">
+        <span> {{ this.meta.city.sunset * 1000 | date :'HH:mm' }} </span>
+      </div>
+    </div>
+
   </div>
 
 

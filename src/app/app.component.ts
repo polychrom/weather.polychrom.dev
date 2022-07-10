@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { fromEvent } from 'rxjs';
 import { ApiService } from './api.service';
 import { HelperService } from './helper.service';
@@ -37,7 +38,9 @@ export class AppComponent {
     public apiService: ApiService,
     public helperService: HelperService,
     public sharedService: SharedService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) {
     if (this.helperService.isBrowser()) {
       this.apiService.initLatestWeatherFromStorage();
@@ -51,6 +54,18 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
+    if (this.helperService.isBrowser()) {
+      this.activatedRoute.queryParams.subscribe((res) => {
+        if (Object.keys(res).length > 0) {
+          console.log('ROUTE params', res);
+          const currentUrl = this.router.url;
+          if (currentUrl.toLowerCase().indexOf('/city') > -1) {
+            // start request
+          }
+        }
+      });
+    }
+
     this.apiService.$unitTemperature.subscribe(() => {
       console.log('cdr triggered');
       this.cdr.detectChanges();
